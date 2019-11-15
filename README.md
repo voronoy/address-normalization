@@ -2,18 +2,21 @@
 
 A way to normalize US mailing addresses without the need for an external service. This is a port of the perl module Geo::StreetAddress::US originally written by Schuyler D. Erle.
 
+This is a fork from khartnett/address-normalization -- kudos for the original work!
+
 **Installation**
 
-`$composer require khartnett/address-normalization`
+`$composer require zerodahero/address-normalization`
 
 **Usage**
 
 ```
 <?php
- use Khartnett\Normalization;
- $n = new Normalization();
- $result = $n->parse('204 southeast Smith Street Harrisburg, or 97446');
- /* result:
+ use ZeroDaHero\Normalizer;
+ $n = new Normalizer();
+ $address = $n->parse('204 southeast Smith Street Harrisburg, or 97446');
+ $address->getAddressComponents();
+ /* output:
  [
      "number" => "204",
      "street" => "Smith",
@@ -31,7 +34,8 @@ A way to normalize US mailing addresses without the need for an external service
      "suffix2" => null,
      "street2" => null,
  ] */
- $string_result = $n->parse('204 southeast Smith Street Harrisburg, or 97446', true);
+
+ $address->toString();
   /* string_result:
   "204 SE Smith St, Harrisburg, OR 97446"
   */
