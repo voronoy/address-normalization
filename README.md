@@ -10,7 +10,7 @@ This is a fork from khartnett/address-normalization -- kudos for the original wo
 
 **Usage**
 
-```
+```php
 <?php
  use ZeroDaHero\Normalizer;
  $n = new Normalizer();
