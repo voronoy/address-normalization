@@ -1,18 +1,23 @@
 {
-    "name": "khartnett/address-normalization",
+    "name": "zerodahero/address-normalization",
     "description": "Converts mailing addresses into a normalized format",
     "keywords": ["mailing", "address", "normalization"],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "license": "MIT",
     "authors": [
-        {"name": "Kieran Hartnett", "email": "khartnet@gmail.com"}
+        {"name": "Kieran Hartnett", "email": "khartnet@gmail.com"},
+        {"name": "Zack Teska", "email": "zerodahero@gmail.com"}
     ],
     "autoload": {
         "psr-4": {
-            "Khartnett\\": "src/"
+            "ZeroDaHero\\": "src/"
         }
     },
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=7.2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.4",
+        "symfony/var-dumper": "^4.3"
     }
 }
