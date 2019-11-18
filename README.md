@@ -1,12 +1,17 @@
 # Basic Address Normalizer
+[![Build Status](https://travis-ci.org/zerodahero/address-normalization.svg?branch=master)](https://travis-ci.org/zerodahero/address-normalization)
 
 ## Purpose
 
-The main purpose of this package is as the first layer of address normalization and standardization. Recommended use is to pre-parse/normalize an address and compare to an existing cache/record set using the hash functions
+The main purpose of this package is as the first layer of address normalization and standardization. Recommended use is to pre-parse/normalize an address and compare to an existing cache/record set using the hash functions.
 
 A way to normalize US mailing addresses without the need for an external service. This is a port of the perl module Geo::StreetAddress::US originally written by Schuyler D. Erle.
 
 This is a fork from khartnett/address-normalization -- kudos for the original work!
+
+## Limitations
+
+This is a very basic normalizer. It realistically only handles US-based addresses, and
 
 ## Installation
 
