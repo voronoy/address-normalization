@@ -21,8 +21,12 @@ class AddressTest extends TestCase
 
         $this->assertEquals($address->getFullHash(), $sameAddress->getFullHash());
         $this->assertEquals($address->getStreetHash(), $sameAddress->getStreetHash());
+        $this->assertTrue($address->is($sameAddress));
+        $this->assertTrue($sameAddress->is($address));
 
         $this->assertEquals($address->getStreetHash(), $differentNumberAddress->getStreetHash());
         $this->assertNotEquals($address->getFullHash(), $differentNumberAddress->getFullHash());
+        $this->assertTrue($address->isSameStreet($differentNumberAddress));
+        $this->assertTrue($differentNumberAddress->isSameStreet($address));
     }
 }

@@ -20,6 +20,9 @@ class Address
     protected $suffix2;
     protected $street2;
 
+    protected $fullHash;
+    protected $streetHash;
+
     /**
      * Factory to generate from a parsed array of values
      *
@@ -120,12 +123,18 @@ class Address
      */
     public function getStreetHash(string $algo = 'sha1'): string
     {
-        return hash($algo, strtolower(
+        if ($this->streetHash) {
+            return $this->streetHash;
+        }
+
+        $this->streetHash = hash($algo, strtolower(
             $this->prefix .
             $this->street .
             $this->streetType .
             $this->suffix
         ));
+
+        return $this->streetHash;
     }
 
     /**
@@ -137,7 +146,35 @@ class Address
      */
     public function getFullHash(string $algo = 'sha1'): string
     {
-        return hash($algo, strtolower($this->toString()));
+        if ($this->fullHash) {
+            return $this->fullHash;
+        }
+        $this->fullHash = hash($algo, strtolower($this->toString()));
+        return $this->fullHash;
+    }
+
+    /**
+     * Is this address is the same as another address?
+     *
+     * @param Address $address
+     *
+     * @return bool
+     */
+    public function is(Address $address): bool
+    {
+        return $this->getFullHash() === $address->getFullHash();
+    }
+
+    /**
+     * Is this address on the same street as another address?
+     *
+     * @param Address $address
+     *
+     * @return bool
+     */
+    public function isSameStreet(Address $address): bool
+    {
+        return $this->getStreetHash() === $address->getStreetHash();
     }
 
     /**
