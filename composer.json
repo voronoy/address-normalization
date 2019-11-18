@@ -2,11 +2,10 @@
     "name": "zerodahero/address-normalization",
     "description": "Converts mailing addresses into a normalized format",
     "keywords": ["mailing", "address", "normalization"],
-    "version": "1.1.0",
     "license": "MIT",
     "authors": [
-        {"name": "Kieran Hartnett", "email": "khartnet@gmail.com"},
-        {"name": "Zack Teska", "email": "zerodahero@gmail.com"}
+        {"name": "Zack Teska", "email": "zerodahero@gmail.com"},
+        {"name": "Kieran Hartnett", "email": "khartnet@gmail.com"}
     ],
     "autoload": {
         "psr-4": {
