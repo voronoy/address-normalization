@@ -11,7 +11,15 @@ This is a fork from khartnett/address-normalization -- kudos for the original wo
 
 ## Limitations
 
-This is a very basic normalizer. It realistically only handles US-based addresses, and
+This is a very basic normalizer. It realistically only handles US-based addresses, and should not be considered dependable for strict address-to-address comparison. **This normalizer does not verify the validity of the address!** If you are dependent on _accurate_ addresses, you **need** to be using some other means (3rd party service, most likely) to verify an address.
+
+## Why?
+
+I forked and added features to this package because I needed a decent first-layer to pre-normalize addresses _before_ sending them our standardization service. This helps us limit the number of calls and strict dependence on the service, but also lets us catch a few easy-to-match scenarios here and there, which is a better user experience.
+
+## Alternatives
+
+[Libpostal](https://github.com/openvenues/libpostal) is probably the best of its class in this area. I decided not to use Libpostal because: (1) It requires a few Gbs of space, which is undesirable in my current environment, and (2) it's probably overkill, since I consider our 3rd party service to be authoritative in the matter anyway.
 
 ## Installation
 
