@@ -20,6 +20,7 @@ class Address
     protected $suffix2;
     protected $street2;
 
+    protected $hash;
     protected $fullHash;
     protected $streetHash;
 
@@ -138,7 +139,7 @@ class Address
     }
 
     /**
-     * Gets the full hash (of all address components)
+     * Gets the full hash (of all address components, including zip code)
      *
      * @param string $algo
      *
@@ -154,15 +155,42 @@ class Address
     }
 
     /**
+     * Gets the address hash (of all components MINUS the zip code)
+     *
+     * NOTE: zip codes have the potential to change, and something like 4% of
+     * ZIP codes change every month, so this hash is likely the better comparison
+     *
+     * @param string $algo
+     *
+     * @return string
+     */
+    public function getHash(string $algo = 'sha1'): string
+    {
+        if ($this->hash) {
+            return $this->hash;
+        }
+        $line1 = $this->getLineOne();
+        $line2 = $this->getLineTwo(false);
+        $this->hash = hash($algo, strtolower(
+            ($line1 && $line2) ? $line1 . ', ' . $line2 : $line1
+        ));
+        return $this->hash;
+    }
+
+    /**
      * Is this address is the same as another address?
      *
      * @param Address $address
+     * @param bool $fullHash uses the full hash comparison (with zip) vs without zip
      *
      * @return bool
      */
-    public function is(Address $address): bool
+    public function is(Address $address, bool $fullHash = false): bool
     {
-        return $this->getFullHash() === $address->getFullHash();
+        if ($fullHash) {
+            return $this->getFullHash() === $address->getFullHash();
+        }
+        return $this->getHash() === $address->getHash();
     }
 
     /**
@@ -201,14 +229,18 @@ class Address
     /**
      * Gets the second line of a formatted address
      *
+     * @param bool $withZip include/exclude zip code
+     *
      * @return string
      */
-    private function getLineTwo(): string
+    private function getLineTwo(bool $withZip = true): string
     {
         $line = (string) $this->city;
         $line .= $this->state ? ", " . $this->state : "";
-        $line .= $this->postalCode ? " " . $this->postalCode : "";
-        $line .= $this->postalCodeExt ? "-" . $this->postalCodeExt : "";
+        if ($withZip) {
+            $line .= $this->postalCode ? " " . $this->postalCode : "";
+            $line .= $this->postalCodeExt ? "-" . $this->postalCodeExt : "";
+        }
         return $line;
     }
 
