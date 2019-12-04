@@ -210,7 +210,7 @@ class Address
      *
      * @return string
      */
-    private function getLineOne(): string
+    protected function getLineOne(): string
     {
         $line = (string) $this->number;
         $line .= $this->prefix ? " " . $this->prefix : "";
@@ -233,7 +233,7 @@ class Address
      *
      * @return string
      */
-    private function getLineTwo(bool $withZip = true): string
+    protected function getLineTwo(bool $withZip = true): string
     {
         $line = (string) $this->city;
         $line .= $this->state ? ", " . $this->state : "";
