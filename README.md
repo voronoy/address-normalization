@@ -106,3 +106,18 @@ $address->toArray();
     'Harrisburg, OR 97446'
   ]
 ```
+
+### Hashing
+If you only need to make use of a consistent way of hashing (e.g. if you're starting with a dependable 5-part address, such as from a 3rd party service), you can build a `SimpleAddress`.
+
+```php
+<?php
+use ZeroDaHero\SimpleAddress;
+
+$address = new SimpleAddress('1234 Main St NE', null, 'Minneapolis', 'MN', '55401');
+$address->getHash(); // full hash minus zip
+$address->getFullHash(); // full hash including zip
+
+// CANNOT hash street, since the component parts don't exist
+$address->getStreetHash(); // throws exception
+```

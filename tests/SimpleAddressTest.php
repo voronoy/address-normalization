@@ -19,6 +19,6 @@ class SimpleAddressTest extends TestCase
         $this->assertEquals('c4ced80b9489911b4a66712470833242597aa032', $address->getFullHash());
 
         $this->expectException(AddressNotNormalizedException::class);
-        $this->assertEquals('f7f77f11493cccb50c5827dff7cb8b26d31f8442', $address->getStreetHash());
+        $address->getStreetHash();
     }
 }
