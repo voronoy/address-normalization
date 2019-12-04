@@ -45,4 +45,38 @@ class SimpleAddress extends Address
     {
         throw new AddressNotNormalizedException('Address is not normalized and cannot hash the street.');
     }
+
+    /**
+     * Helper to get an address hash from 5-part address
+     *
+     * @param string $address1
+     * @param string|null $address2
+     * @param string $city
+     * @param string $state
+     * @param string|null $postalCode
+     *
+     * @return string
+     */
+    public static function hashFromParts(string $address1, ?string $address2, string $city, string $state, ?string $postalCode = null): string
+    {
+        $address = new self($address1, $address2, $city, $state, $postalCode);
+        return $address->getHash();
+    }
+
+    /**
+     * Helper to get a full address hash from 5-part address
+     *
+     * @param string $address1
+     * @param string|null $address2
+     * @param string $city
+     * @param string $state
+     * @param string|null $postalCode
+     *
+     * @return string
+     */
+    public static function fullHashFromParts(string $address1, ?string $address2, string $city, string $state, ?string $postalCode = null): string
+    {
+        $address = new self($address1, $address2, $city, $state, $postalCode);
+        return $address->getFullHash();
+    }
 }

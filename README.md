@@ -118,6 +118,9 @@ $address = new SimpleAddress('1234 Main St NE', null, 'Minneapolis', 'MN', '5540
 $address->getHash(); // full hash minus zip
 $address->getFullHash(); // full hash including zip
 
+// or do it all with the factory method:
+SimpleAddress::hashFromParts('1234 Main St NE', null, 'Minneapolis', 'MN', '55401');
+
 // CANNOT hash street, since the component parts don't exist
 $address->getStreetHash(); // throws exception
 ```
