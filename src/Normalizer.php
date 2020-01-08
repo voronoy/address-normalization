@@ -12,6 +12,8 @@ class Normalizer
 
     private $stateCodes = [];
 
+    private $strictMode = true;
+
     public $street_type_regexp;
     public $number_regexp;
     public $fraction_regexp;
@@ -32,6 +34,7 @@ class Normalizer
         $this->setDirectionalLookup($options['directional_lookups'] ?? include(__DIR__ . '/lookups/directional.php'), false);
         $this->setStateCodesLookup($options['state_codes_lookups'] ?? include(__DIR__ . '/lookups/state_codes.php'), false);
         $this->setStreetTypesLookup($options['street_types_lookups'] ?? include(__DIR__ . '/lookups/street_types.php'), false);
+        $this->setStrictMode($options['strict_mode'] ?? true);
         $this->init();
     }
 
@@ -44,6 +47,16 @@ class Normalizer
     {
         $this->setupStreetTypeList();
         $this->setupRegularExpressions();
+    }
+
+    public function setStrictMode(bool $strictMode): void
+    {
+        $this->strictMode = $strictMode;
+    }
+
+    public function getStrictMode(): bool
+    {
+        return $this->strictMode;
     }
 
     /**
@@ -173,10 +186,46 @@ class Normalizer
             . '(?:' . $this->place_regexp . ')?';
     }
 
+    /**
+     * Parses the given address
+     *
+     * @param string $address
+     *
+     * @return Address|false
+     */
     public function parse($address)
     {
         $addressArray = $this->parseToArray($address);
+        if (!$addressArray) {
+            return false;
+        }
         return Address::fromParsedArray($addressArray);
+    }
+
+    /**
+     * Parses from a 5-part address
+     *
+     * NOTE: set strict mode to false to return a SimpleAddress if the address parts do not normalize
+     *
+     * @param string $address1
+     * @param string|null $address2
+     * @param string $city
+     * @param string $state
+     * @param string $zip
+     *
+     * @return Address|SimpleAddress|false
+     */
+    public function parseFromComponents(string $address1, ?string $address2, string $city, string $state, string $zip)
+    {
+        $address = new SimpleAddress($address1, $address2, $city, $state, $zip);
+
+        $parsed = $this->parse((string)$address);
+
+        if (!$parsed) {
+            return ($this->getStrictMode()) ? false : $address;
+        }
+
+        return $parsed;
     }
 
     protected function parseToArray($address)
