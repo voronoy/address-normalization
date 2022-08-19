@@ -209,13 +209,13 @@ class Normalizer
      *
      * @param string $address1
      * @param string|null $address2
-     * @param string $city
-     * @param string $state
+     * @param string|null $city
+     * @param string|null $state
      * @param string|null $zip
      *
      * @return Address|SimpleAddress|false
      */
-    public function parseFromComponents(string $address1, ?string $address2 = null, string $city, string $state, ?string $zip = null)
+    public function parseFromComponents(string $address1, ?string $address2, ?string $city, ?string $state, ?string $zip = null)
     {
         $address = new SimpleAddress($address1, $address2, $city, $state, $zip);
 
